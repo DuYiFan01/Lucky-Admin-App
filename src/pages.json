@@ -32,25 +32,44 @@
       {
         "iconPath": "static/tabbar/example.png",
         "selectedIconPath": "static/tabbar/exampleHL.png",
-        "pagePath": "pages/about/about",
-        "text": "关于"
+        "pagePath": "pages/work/index",
+        "text": "工作台"
+      },
+      {
+        "iconPath": "static/tabbar/personal.png",
+        "selectedIconPath": "static/tabbar/personalHL.png",
+        "pagePath": "pages/profile/index",
+        "text": "个人中心"
       }
     ]
   },
   "pages": [
     {
-      "path": "pages/index/index",
+      "path": "pages/login/index",
       "type": "home",
       "style": {
-        "navigationStyle": "custom",
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/index/index",
+      "type": "page",
+      "style": {
         "navigationBarTitleText": "首页"
       }
     },
     {
-      "path": "pages/about/about",
+      "path": "pages/profile/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "关于"
+        "navigationBarTitleText": "个人中心"
+      }
+    },
+    {
+      "path": "pages/work/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "控制台"
       }
     }
   ],
