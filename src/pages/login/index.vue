@@ -144,15 +144,14 @@ import { isMpWeixin } from '@/utils/platform'
 import { getCode, ILoginForm } from '@/api/login'
 import { toast } from '@/utils/lucky/toast'
 import { isTableBar } from '@/utils'
-import { storeToRefs } from 'pinia'
 const redirectRoute = ref('')
 // 页面加载完毕时触发
 onLoad((option) => {
   refreshCaptcha()
   // 获取跳转路由
-  // if (option.redirect) {
-  //   redirectRoute.value = option.redirect
-  // }
+  if (option.redirect) {
+    redirectRoute.value = option.redirect
+  }
 })
 
 // 获取环境变量
@@ -177,7 +176,7 @@ const loginForm = ref<ILoginForm>({
 })
 
 // 隐私协议勾选状态
-const agreePrivacy = ref(false)
+const agreePrivacy = ref(true)
 
 // 账号密码登录
 const handleAccountLogin = async () => {
