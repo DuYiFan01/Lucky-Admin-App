@@ -14,6 +14,7 @@ export const http = <T>(options: CustomRequestOptions) => {
       // #ifndef MP-WEIXIN
       responseType: 'json',
       // #endif
+      withCredentials: true,
       // 响应成功
       success(res) {
         // 状态码 2xx，参考 axios 的设计
@@ -23,7 +24,7 @@ export const http = <T>(options: CustomRequestOptions) => {
           if (data.code === -401) {
             // 未登录或登录已过期
             // 清除用户信息
-            useUserStore().removeUserInfo()
+            useUserStore().LogoutAction()
             // 跳转登录页
             const currentPath = getCurrentPages()?.[0]?.route || ''
             // 如果不是登录页，弹出提示框
@@ -46,7 +47,7 @@ export const http = <T>(options: CustomRequestOptions) => {
             } else {
               toast.error(data.message)
             }
-            // uni.navigateTo({ url: '/pages/login/index' })
+            uni.navigateTo({ url: '/pages/login/index' })
           } else if (data.code === -403) {
             // 没有权限
             toast.error(data.message)

@@ -1,5 +1,5 @@
 import Cookie from 'js-cookie'
-
+import { isMpWeixin } from '../platform'
 /**
  * TokeKey的名字
  */
@@ -41,6 +41,10 @@ export const removeToken = () => {
  * @param value Cookie的value
  */
 export const setCookieMap = (key: string, value: any) => {
+  if (isMpWeixin) {
+    uni.setStorageSync(key, value)
+    return
+  }
   Cookie.set(key, value)
 }
 
@@ -50,6 +54,9 @@ export const setCookieMap = (key: string, value: any) => {
  * @returns Cookie的value
  */
 export const getCookieMap = <T>(key: string) => {
+  if (isMpWeixin) {
+    return uni.getStorageSync(key) as T
+  }
   return Cookie.get(key) as T
 }
 
@@ -58,5 +65,9 @@ export const getCookieMap = <T>(key: string) => {
  * @param key Cookie的key
  */
 export const removeCookieMap = (key: string) => {
+  if (isMpWeixin) {
+    uni.removeStorageSync(key)
+    return
+  }
   Cookie.remove(key)
 }

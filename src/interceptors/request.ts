@@ -3,7 +3,7 @@ import qs from 'qs'
 import { useUserStore } from '@/store'
 import { platform } from '@/utils/platform'
 import { getEnvBaseUrl } from '@/utils'
-import { getToken } from '@/utils/lucky/auth'
+import { getToken, getTokenKey } from '@/utils/lucky/auth'
 
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
@@ -54,7 +54,8 @@ const httpInterceptor = {
     // 3. 添加 token 请求头标识
     const token = getToken()
     if (token) {
-      options.header.Authorization = `Bearer ${token}`
+      // options.header.Authorization = `Bearer ${token}`
+      options.header[getTokenKey()] = token
     }
   },
 }

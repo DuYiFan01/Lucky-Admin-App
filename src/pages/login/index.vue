@@ -130,10 +130,7 @@
         </view>
       </wd-checkbox>
     </view>
-
     <view class="login-footer"></view>
-
-    <!-- 页面内容结束 -->
   </view>
 </template>
 
@@ -174,92 +171,37 @@ const loginForm = ref<ILoginForm>({
   code: '',
   uuid: '',
 })
-
 // 隐私协议勾选状态
 const agreePrivacy = ref(true)
 
 // 账号密码登录
 const handleAccountLogin = async () => {
-  try {
-    // 验证是否同意隐私协议
-    if (!agreePrivacy.value) {
-      toast.error('请阅读同意协议')
-      return
-    }
-    // 表单验证
-    if (!loginForm.value.username) {
-      toast.error('请输入用户名')
-      return
-    }
-    if (!loginForm.value.password) {
-      toast.error('请输入密码')
-      return
-    }
-    if (captcha.value.captchaEnabled && !loginForm.value.code) {
-      toast.error('请输入验证码')
-      return
-    }
-
-    // 显示加载提示
-    // uni.showLoading({ title: '登录中...' })
-
-    // 执行登录
-    const loginRes = await userStore.LoginAction(loginForm.value)
-    console.log('登录结果:', loginRes)
-
-    // 获取用户信息
-    const userInfoRes = await userStore.UserInfoAction()
-    console.log('用户信息:', userInfoRes)
-
-    // 登录成功提示
-    toast.success('登录成功')
-
-    // 隐藏加载提示
-    uni.hideLoading()
-
-    // 跳转到首页或重定向页面
-    const targetUrl = redirectRoute.value || '/pages/index/index'
-    if (isTableBar(targetUrl)) {
-      uni.switchTab({ url: targetUrl })
-    } else {
-      uni.redirectTo({ url: targetUrl })
-    }
-  } catch (error) {
-    console.error('登录失败:', error)
-    toast.error('登录失败，请重试')
-    // 刷新验证码
-    refreshCaptcha()
-  } finally {
-    uni.hideLoading()
+  if (!agreePrivacy.value) {
+    toast.error('请阅读同意协议')
+    return
+  }
+  // 表单验证
+  if (!loginForm.value.username) {
+    toast.error('请输入用户名')
+    return
   }
   if (!loginForm.value.password) {
     toast.error('请输入密码')
     return
   }
-  // 显示加载中
-  // uni.showLoading({ title: '登录中...' })
-  userStore
-    .LoginAction(loginForm.value)
-    .then((res) => {
-      console.log(res)
-      // 登录成功
-      // 隐藏加载
-      // uni.hideLoading()
-      // 登录成功提示
-      toast.success('登录成功')
-      // 跳转页面
-      const routerPath: string = redirectRoute.value || '/pages/index/index'
-      console.log('isTableBar(routerPath)', isTableBar(routerPath))
-      if (isTableBar(routerPath)) {
-        uni.switchTab({ url: routerPath })
-      } else {
-        uni.navigateTo({ url: routerPath })
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-      // 登录失败
-    })
+  if (captcha.value.captchaEnabled && !loginForm.value.code) {
+    toast.error('请输入验证码')
+    return
+  }
+  // 执行登录
+  await userStore.LoginAction(loginForm.value)
+  // 跳转到首页或重定向页面
+  const targetUrl = redirectRoute.value || '/pages/index/index'
+  if (isTableBar(targetUrl)) {
+    uni.switchTab({ url: targetUrl })
+  } else {
+    uni.redirectTo({ url: targetUrl })
+  }
 }
 
 // 微信登录

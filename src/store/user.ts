@@ -24,6 +24,7 @@ export const useUserStore = defineStore(
     const userInfo = ref<IUserInfoVo>({ ...userInfoState })
     // 设置用户信息
     const setUserInfo = (val: IUserInfoVo) => {
+      // 若头像为空 则使用默认头像
       userInfo.value = val
     }
     // 删除用户信息

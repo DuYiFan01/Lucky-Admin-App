@@ -17,8 +17,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useUserStore } from '@/store'
 const appTitle = ref(import.meta.env.VITE_APP_TITLE || 'Lucky-Admin-App')
 const appLogo = ref(import.meta.env.VITE_APP_LOGO || '/static/logo.png')
+onShow((options) => {
+  console.log('首页onShow', options)
+  useUserStore().UserInfoAction()
+})
 </script>
 
 <style lang="scss" scoped>

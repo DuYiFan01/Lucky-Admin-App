@@ -8,17 +8,17 @@ onLaunch(() => {
   console.log('App Launch')
   // 文档位置 : https://uniapp.dcloud.net.cn/api/system/network.html#onnetworkstatuschange
   // 监听网络状态变化
-  // uni.onNetworkStatusChange((result) => {
-  //   const { isConnected, networkType } = result
-  //   if (!isConnected) {
-  //     toast.error('网络连接已断开')
-  //   }
-  //   console.log('网络状态:' + networkType)
-  // })
-  // // 检测是否登录
-  // // #ifdef MP-WEIXIN
-  // checkLogin()
-  // // #endif
+  uni.onNetworkStatusChange((result) => {
+    const { isConnected, networkType } = result
+    if (!isConnected) {
+      toast.error('网络连接已断开')
+    }
+    console.log('网络状态:' + networkType)
+  })
+  // 检测是否登录
+  // #ifdef MP-WEIXIN
+  checkLogin()
+  // #endif
 })
 onShow((options) => {
   console.log(options)

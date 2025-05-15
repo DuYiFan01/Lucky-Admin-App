@@ -12,7 +12,11 @@
 </template>
 
 <script lang="ts" setup>
-//
+import { useUserStore } from '@/store'
+onShow((options) => {
+  console.log('工作台onShow', options)
+  useUserStore().UserInfoAction()
+})
 </script>
 
 <style lang="scss" scoped>

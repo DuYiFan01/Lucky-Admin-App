@@ -70,11 +70,13 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/store'
 import { toast } from '@/utils/lucky/toast'
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+onShow((options) => {
+  console.log('个人中心onShow', options)
+  useUserStore().UserInfoAction()
+})
 
 // 用户信息
-const userInfo = storeToRefs(useUserStore()).userInfo
+const userInfo = useUserStore().userInfo
 
 // 监听用户信息变化
 // watch(

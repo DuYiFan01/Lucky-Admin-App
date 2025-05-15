@@ -54,7 +54,6 @@ const navigateToInterceptor = {
     if (routerStatus) {
       return true
     }
-
     /*
         // 所有页面都不需要登录，除了设置了 needLogin 的页面
         if (isDev) {
@@ -98,5 +97,6 @@ export const routeInterceptor = {
     uni.addInterceptor('reLaunch', navigateToInterceptor)
     uni.addInterceptor('redirectTo', navigateToInterceptor)
     uni.addInterceptor('switchTab', navigateToInterceptor)
+    uni.addInterceptor('navigateBack', navigateToInterceptor)
   },
 }
