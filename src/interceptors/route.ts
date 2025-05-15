@@ -10,6 +10,7 @@ import {
   getNotLoginPages,
   getLoginPage,
 } from '@/utils'
+import { getToken } from '@/utils/lucky/auth'
 
 // 这里用来跳转到登录页
 const loginRoute = getLoginPage()
@@ -17,6 +18,10 @@ const loginRoute = getLoginPage()
 const whiteRouters = [loginRoute]
 
 const isDev = import.meta.env.DEV
+// 判断是否登录
+const isLogin = () => {
+  return !!getToken()
+}
 
 /**
  * 这里是所有的页面都需要登录
@@ -66,7 +71,7 @@ const navigateToInterceptor = {
     */
     // 后续的逻辑
     // 每次路由拦截时重新计算登录状态
-    const hasLogin = userStore.isLogin
+    const hasLogin = isLogin()
     console.log('是否登录:', hasLogin)
     console.log('用户信息:', userStore.userInfo)
     if (hasLogin) {
@@ -80,7 +85,7 @@ const navigateToInterceptor = {
       return true
     }
     console.log('未登录，跳转登录页')
-    userStore.removeUserInfo()
+    userStore.LogoutAction()
     const redirectRoute = `${loginRoute}?redirect=${encodeURIComponent(url)}`
     uni.navigateTo({ url: redirectRoute })
     return false
