@@ -1,7 +1,8 @@
 <route lang="json5" type="page">
 {
   style: {
-    navigationBarTitleText: '控制台',
+    navigationBarTitleText: '工作台',
+    navigationStyle: 'custom',
   },
 }
 </route>

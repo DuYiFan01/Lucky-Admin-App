@@ -1,30 +1,33 @@
 /**
- * by 菲鸽 on 2024-03-06
  * 路由拦截，通常也是登录拦截
- * 可以设置路由白名单，或者黑名单，看业务需要选哪一个
- * 我这里应为大部分都可以随便进入，所以使用黑名单
  */
 import { useUserStore } from '@/store'
-import { needLoginPages as _needLoginPages, getNeedLoginPages, getLastPage } from '@/utils'
+import {
+  needLoginPages as _needLoginPages,
+  notLoginPages as _notLoginPages,
+  getNeedLoginPages,
+  getLastPage,
+  getNotLoginPages,
+  getLoginPage,
+} from '@/utils'
 
-// TODO Check
-const loginRoute = '/pages/login/index'
-
-const isLogined = () => {
-  const userStore = useUserStore()
-  return userStore.isLogined
-}
+// 这里用来跳转到登录页
+const loginRoute = getLoginPage()
+// 白名单页面，可以设置多个，登录注册页面
+const whiteRouters = [loginRoute]
 
 const isDev = import.meta.env.DEV
 
-// 黑名单登录拦截器 - （适用于大部分页面不需要登录，少部分页面需要登录）
+/**
+ * 这里是所有的页面都需要登录
+ * 使用 getNeedLoginPages 获取 所有需要登录的页面
+ * 使用 getNotLoginPages 获取 所有不需要登录的页面
+ */
 const navigateToInterceptor = {
-  // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
-  // 增加对相对路径的处理，BY 网友 @ideal
   invoke({ url }: { url: string }) {
-    // console.log(url) // /pages/route-interceptor/index?name=feige&age=30
+    // 获取用户状态
+    const userStore = useUserStore()
     let path = url.split('?')[0]
-
     // 处理相对路径
     if (!path.startsWith('/')) {
       const currentPath = getLastPage().route
@@ -32,22 +35,52 @@ const navigateToInterceptor = {
       const baseDir = normalizedCurrentPath.substring(0, normalizedCurrentPath.lastIndexOf('/'))
       path = `${baseDir}/${path}`
     }
-
-    let needLoginPages: string[] = []
-    // 为了防止开发时出现BUG，这里每次都获取一下。生产环境可以移到函数外，性能更好
+    console.log('路由拦截器当前页面:', path)
+    let routers: string[] = []
+    // 所有页面都需要登录，除了设置了 notLogin 的页面 和 白名单页面
     if (isDev) {
-      needLoginPages = getNeedLoginPages()
+      // 获取白名单和不需要登录的页面
+      routers = [...getNotLoginPages(), ...whiteRouters]
     } else {
-      needLoginPages = _needLoginPages
+      routers = [..._notLoginPages, ...whiteRouters]
     }
-    const isNeedLogin = needLoginPages.includes(path)
-    if (!isNeedLogin) {
+    // 不需要登录
+    const routerStatus: boolean = routers.includes(path)
+    if (routerStatus) {
       return true
     }
-    const hasLogin = isLogined()
+
+    /*
+        // 所有页面都不需要登录，除了设置了 needLogin 的页面
+        if (isDev) {
+          // 获取白名单和不需要登录的页面
+          routers = [...getNeedLoginPages()]
+        } else {
+          routers = [..._needLoginPages]
+        }
+        // 需要登录的页面
+        const routerStatus: boolean = routers.includes(path)
+        if (!routerStatus) {
+          return true
+        }
+    */
+    // 后续的逻辑
+    // 每次路由拦截时重新计算登录状态
+    const hasLogin = userStore.isLogin
+    console.log('是否登录:', hasLogin)
+    console.log('用户信息:', userStore.userInfo)
     if (hasLogin) {
+      // 这里根据实际情况来写，若需要获取用户信息，可以在这里获取，不需要就直接返回
+      // 判断是否获取了用户信息
+      // 判断用户信息不存在或ID为0时需要获取用户信息
+      if (!userStore.userInfo || userStore.userInfo.id === 0) {
+        console.log('已登录，没有用户信息，获取用户信息')
+        userStore.UserInfoAction()
+      }
       return true
     }
+    console.log('未登录，跳转登录页')
+    userStore.removeUserInfo()
     const redirectRoute = `${loginRoute}?redirect=${encodeURIComponent(url)}`
     uni.navigateTo({ url: redirectRoute })
     return false

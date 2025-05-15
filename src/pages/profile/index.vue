@@ -14,9 +14,9 @@
         <wd-img :src="userInfo.avatar" width="80px" height="80px" radius="50%"></wd-img>
       </view>
       <view class="user-details">
-        <view class="username">{{ userInfo.username }}</view>
-        <view class="user-id">ID: {{ userInfo.userId }}</view>
-        <view class="user-created">注册时间: {{ userInfo.createdAt }}</view>
+        <view class="username">{{ userInfo.name }}</view>
+        <view class="user-id">ID: {{ userInfo.id }}</view>
+        <view class="user-created">注册时间: {{ userInfo.createTime }}</view>
       </view>
     </view>
 
@@ -43,9 +43,14 @@
             <wd-icon name="notification" size="20px"></wd-icon>
           </template>
         </wd-cell>
-        <wd-cell title="隐私设置" is-link @click="handleCellClick('privacy')">
+        <wd-cell title="清理缓存" is-link @click="handleCellClick('privacy')">
           <template #icon>
-            <wd-icon name="setting" size="20px"></wd-icon>
+            <wd-icon name="clear" size="20px"></wd-icon>
+          </template>
+        </wd-cell>
+        <wd-cell title="应用更新" is-link @click="handleCellClick('privacy')">
+          <template #icon>
+            <wd-icon name="refresh1" size="20px"></wd-icon>
           </template>
         </wd-cell>
         <wd-cell title="关于我们" is-link @click="handleCellClick('about')">
@@ -63,21 +68,45 @@
 </template>
 
 <script lang="ts" setup>
+import { useUserStore } from '@/store'
+import { toast } from '@/utils/lucky/toast'
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 // 用户信息
-const userInfo = ref({
-  username: '用户名',
-  userId: '10086',
-  avatar: '/static/profile.jpg',
-  createdAt: '2023-01-01',
-})
+const userInfo = storeToRefs(useUserStore()).userInfo
+
+// 监听用户信息变化
+// watch(
+//   () => userStore.userInfo,
+//   (newVal) => {
+//     userInfo.value = newVal
+//   },
+//   { deep: true },
+// )
 
 // 跳转到头像编辑页面
 const navigateToAvatarEdit = () => {
-  uni.navigateTo({
-    url: '/pages/profile/avatar/index',
-  })
+  // 判断运行环境
+  if (uni.getSystemInfoSync().platform === 'mp-weixin') {
+    // 微信小程序环境
+    wx.getUserProfile({
+      desc: '用于完善会员资料',
+      success: (res) => {
+        userInfo.avatar = res.userInfo.avatarUrl
+      },
+    })
+  } else {
+    // H5或其他环境
+    uni.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        userInfo.avatar = res.tempFilePaths[0]
+      },
+    })
+  }
 }
 
 // 处理功能项点击
@@ -95,18 +124,12 @@ const handleLogout = () => {
     content: '确定要退出登录吗？',
     success: (res) => {
       if (res.confirm) {
+        // 清空用户信息
+        useUserStore().LogoutAction()
         // 执行退出登录逻辑
-        uni.showToast({
-          title: '已退出登录',
-          icon: 'success',
-          success: () => {
-            setTimeout(() => {
-              uni.reLaunch({
-                url: '/pages/login/index',
-              })
-            }, 1500)
-          },
-        })
+        toast.success('退出登录成功')
+        // 跳转到登录页面
+        uni.reLaunch({ url: '/pages/login/index' })
       }
     },
   })
@@ -116,7 +139,7 @@ const handleLogout = () => {
 <style lang="scss" scoped>
 /* 基础样式 */
 .profile-container {
-  min-height: 100vh;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   background-color: #f7f8fa;
 }
@@ -124,20 +147,27 @@ const handleLogout = () => {
 .user-info-section {
   display: flex;
   align-items: center;
-  padding: 30rpx 40rpx;
-  margin: 20rpx;
+  padding: 40rpx;
+  margin: 30rpx 30rpx 20rpx;
   background-color: #fff;
-  border-radius: 16rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  border-radius: 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: translateY(2rpx);
+    box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  }
 }
 
 .avatar-wrapper {
   width: 160rpx;
   height: 160rpx;
-  margin-right: 30rpx;
+  margin-right: 40rpx;
   overflow: hidden;
-  border: 2rpx solid #eee;
+  border: 4rpx solid #f5f5f5;
   border-radius: 50%;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 
 .user-details {
@@ -145,10 +175,11 @@ const handleLogout = () => {
 }
 
 .username {
-  margin-bottom: 10rpx;
-  font-size: 36rpx;
+  margin-bottom: 12rpx;
+  font-size: 38rpx;
   font-weight: 600;
   color: #333;
+  letter-spacing: 0.5rpx;
 }
 
 .user-id {

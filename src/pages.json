@@ -1,7 +1,7 @@
 {
   "globalStyle": {
     "navigationStyle": "default",
-    "navigationBarTitleText": "unibest",
+    "navigationBarTitleText": "Lucky-Admin-Vue",
     "navigationBarBackgroundColor": "#f8f8f8",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#FFFFFF"
@@ -48,14 +48,16 @@
       "path": "pages/login/index",
       "type": "home",
       "style": {
-        "navigationBarTitleText": "登录"
+        "navigationBarTitleText": "登录",
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/index/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "首页"
+        "navigationBarTitleText": "首页",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -69,7 +71,8 @@
       "path": "pages/work/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "控制台"
+        "navigationBarTitleText": "工作台",
+        "navigationStyle": "custom"
       }
     }
   ],

@@ -1,6 +1,15 @@
 import { pages, subPackages, tabBar } from '@/pages.json'
 import { isMpWeixin } from './platform'
 
+/**
+ * 获取登录页
+ * @returns 登录页
+ */
+export const getLoginPage = () => {
+  // 登录页
+  return '/pages/login/index'
+}
+
 export const getLastPage = () => {
   // getCurrentPages() 至少有1个元素，所以不再额外判断
   // const lastPage = getCurrentPages().at(-1)
@@ -21,6 +30,26 @@ export const getIsTabbar = () => {
   const lastPage = getLastPage()
   const currPath = lastPage.route
   return !!tabBar.list.find((e) => e.pagePath === currPath)
+}
+
+/**
+ * 判断指定页面是否是 tabbar 页
+ * @param path 页面路径
+ * @returns true: 是 tabbar 页 false: 不是 tabbar 页
+ */
+export const isTableBar = (path: string) => {
+  if (!tabBar) {
+    return false
+  }
+  if (!tabBar.list.length) {
+    // 通常有 tabBar 的话，list 不能有空，且至少有2个元素，这里其实不用处理
+    return false
+  }
+  // 这里需要处理一下 path，因为 tabBar 中的 pagePath 是不带 /pages 前缀的
+  if (path.startsWith('/')) {
+    path = path.substring(1)
+  }
+  return !!tabBar.list.find((e) => e.pagePath === path)
 }
 
 /**
@@ -75,7 +104,7 @@ export const getUrlObj = (url: string) => {
 /**
  * 得到所有的需要登录的 pages，包括主包和分包的
  * 这里设计得通用一点，可以传递 key 作为判断依据，默认是 needLogin, 与 route-block 配对使用
- * 如果没有传 key，则表示所有的 pages，如果传递了 key, 则表示通过 key 过滤
+ * 如果没有传 key 则返回needLogin 为true的页面
  */
 export const getAllPages = (key = 'needLogin') => {
   // 这里处理主包
@@ -118,6 +147,23 @@ export const getNeedLoginPages = (): string[] => getAllPages('needLogin').map((p
  * 只得到 path 数组
  */
 export const needLoginPages: string[] = getAllPages('needLogin').map((page) => page.path)
+
+/**
+ * 得到所有不需要登录的 pages，包括主包和分包的
+ * 只得到 path 数组
+ */
+export const getNotLoginPages = (): string[] => getAllPages('notLogin').map((page) => page.path)
+
+/**
+ * 得到所有的需要登录的 pages，包括主包和分包的
+ * 只得到 path 数组
+ */
+export const notLoginPages: string[] = getAllPages('notLogin').map((page) => page.path)
+
+/**
+ * 得到所有不需要登录的 pages，包括主包和分包的
+ * 只得到 path 数组
+ */
 
 /**
  * 根据微信小程序当前环境，判断应该获取的 baseUrl

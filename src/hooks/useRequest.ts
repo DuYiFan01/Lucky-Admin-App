@@ -16,7 +16,7 @@ type IUseRequestOptions<T> = {
  * @returns 返回一个对象{loading, error, data, run}，包含请求的加载状态、错误信息、响应数据和手动触发请求的函数。
  */
 export default function useRequest<T>(
-  func: () => Promise<IResData<T>>,
+  func: () => Promise<R<T>>,
   options: IUseRequestOptions<T> = { immediate: false },
 ) {
   const loading = ref(false)

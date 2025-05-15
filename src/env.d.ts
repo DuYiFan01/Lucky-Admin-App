@@ -11,6 +11,10 @@ declare module '*.vue' {
 interface ImportMetaEnv {
   /** 网站标题，应用名称 */
   readonly VITE_APP_TITLE: string
+  /**
+   * 网站logo
+   */
+  readonly VITE_APP_LOGO: string
   /** 服务端口号 */
   readonly VITE_SERVER_PORT: string
   /** 后台接口地址 */

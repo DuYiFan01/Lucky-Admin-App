@@ -1,9 +1,9 @@
 // 全局要用的类型放到这里
 
 declare global {
-  type IResData<T> = {
+  type R<T> = {
     code: number
-    msg: string
+    message: string
     data: T
   }
 
@@ -16,12 +16,38 @@ declare global {
     formData?: any
   }
 
-  type IUserInfo = {
-    nickname?: string
-    avatar?: string
-    /** 微信的 openid，非微信没有这个字段 */
-    openid?: string
-    token?: string
+  /**
+   * 用户信息
+   */
+  type IUserInfoVo = {
+    id: number
+    username: string
+    name: string
+    sex: string
+    email: string
+    phone: string
+    avatar: string
+    createTime: string
+    roles: string[]
+    permissions: string[]
+  }
+
+  /**
+   * 登录返回的信息
+   */
+  type IUserLogin = {
+    id: number
+    username: string
+    token: string
+  }
+
+  /**
+   * 获取验证码
+   */
+  type ICaptcha = {
+    captchaEnabled: boolean
+    uuid: string
+    image: string
   }
 }
 
