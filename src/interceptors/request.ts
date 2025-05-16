@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import qs from 'qs'
-import { useUserStore } from '@/store'
 import { platform } from '@/utils/platform'
 import { getEnvBaseUrl } from '@/utils'
 import { getToken, getTokenKey } from '@/utils/lucky/auth'

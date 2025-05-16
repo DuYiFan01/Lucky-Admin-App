@@ -193,32 +193,3 @@ export const getEnvBaseUrl = () => {
 
   return baseUrl
 }
-
-/**
- * 根据微信小程序当前环境，判断应该获取的 UPLOAD_BASEURL
- */
-export const getEnvBaseUploadUrl = () => {
-  // 请求基准地址
-  let baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL
-
-  // 微信小程序端环境区分
-  if (isMpWeixin) {
-    const {
-      miniProgram: { envVersion },
-    } = uni.getAccountInfoSync()
-
-    switch (envVersion) {
-      case 'develop':
-        baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL__WEIXIN_DEVELOP || baseUploadUrl
-        break
-      case 'trial':
-        baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL__WEIXIN_TRIAL || baseUploadUrl
-        break
-      case 'release':
-        baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL__WEIXIN_RELEASE || baseUploadUrl
-        break
-    }
-  }
-
-  return baseUploadUrl
-}

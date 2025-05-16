@@ -14,6 +14,14 @@ export const getTokenKey = (): string => {
 }
 
 /**
+ * 是否登录，即是否有token，不检查Token是否过期和是否有效
+ * @returns 是否登录
+ */
+export const isLogin = () => {
+  return !!getToken()
+}
+
+/**
  * 获取Token
  * @returns 令牌
  */

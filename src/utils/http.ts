@@ -1,5 +1,4 @@
 import { CustomRequestOptions } from '@/interceptors/request'
-import { useMessage } from 'wot-design-uni'
 import { useUserStore } from '@/store'
 import { toast } from '@/utils/lucky/toast'
 import { getLoginPage } from '.'
@@ -7,7 +6,7 @@ export const http = <T>(options: CustomRequestOptions) => {
   // 1. 返回 Promise 对象
   return new Promise<R<T>>((resolve, reject) => {
     // Loading
-    uni.showLoading({ title: '加载中', mask: true })
+    uni.showLoading({ title: '加载中...', mask: true })
     uni.request({
       ...options,
       dataType: 'json',
@@ -30,20 +29,18 @@ export const http = <T>(options: CustomRequestOptions) => {
             // 如果不是登录页，弹出提示框
             if (currentPath !== getLoginPage()) {
               // 创建message实例
-              // const message = useMessage()
-              // message
-              //   .confirm({
-              //     title: '登录过期',
-              //     msg: '您的登录已过期，请重新登录',
-              //     confirmButtonText: '去登录',
-              //     cancelButtonText: '取消',
-              //   })
-              //   .then(() => {
-              //     uni.navigateTo({
-              //       url: getLoginPage() + `?redirect=${encodeURIComponent(currentPath)}`,
-              //     })
-              //   })
+              uni.showModal({
+                title: '提示',
+                content: '您还未登录，请先登录',
+                success(res) {
+                  if (res.confirm) {
+                    uni.navigateTo({ url: '/pages/login/index' })
+                  }
+                },
+              })
+              console.log('登录过期')
               toast.error('登录过期,请重新登录')
+              return
             } else {
               toast.error(data.message)
             }
@@ -64,14 +61,19 @@ export const http = <T>(options: CustomRequestOptions) => {
           !options.hideErrorToast && toast.error((res.data as R<T>).message || '请求错误')
           reject(res)
         }
-        uni.hideLoading()
       },
       // 响应失败
       fail(err) {
         console.error('/utils/http.ts 错误：', err.errMsg)
         toast.error('httpError:网络错误，换个网络试试')
         reject(err)
-        uni.hideLoading()
+      },
+      complete() {
+        // 隐藏Loading
+        // 延迟 500ms 再隐藏 Loading，避免与页面切换动画冲突
+        setTimeout(() => {
+          uni.hideLoading()
+        }, 500)
       },
     })
   })

@@ -195,6 +195,8 @@ const handleAccountLogin = async () => {
   }
   // 执行登录
   await userStore.LoginAction(loginForm.value)
+  // 获取用户信息
+  await userStore.UserInfoAction()
   // 跳转到首页或重定向页面
   const targetUrl = redirectRoute.value || '/pages/index/index'
   if (isTableBar(targetUrl)) {

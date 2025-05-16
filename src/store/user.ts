@@ -1,5 +1,5 @@
 import { login, getUserInfo, logout } from '@/api/login'
-import { getToken, removeToken, setToken } from '@/utils/lucky/auth'
+import { getToken, getTokenKey, removeToken, setToken } from '@/utils/lucky/auth'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -25,6 +25,12 @@ export const useUserStore = defineStore(
     // 设置用户信息
     const setUserInfo = (val: IUserInfoVo) => {
       // 若头像为空 则使用默认头像
+      if (!val.avatar) {
+        val.avatar = userInfoState.avatar
+      } else {
+        val.avatar =
+          import.meta.env.VITE_SERVER_BASEURL + val.avatar + '?' + getTokenKey() + '=' + getToken()
+      }
       userInfo.value = val
     }
     // 删除用户信息

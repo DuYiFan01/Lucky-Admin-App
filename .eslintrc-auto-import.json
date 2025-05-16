@@ -96,6 +96,8 @@
     "onWatcherCleanup": true,
     "useId": true,
     "useModel": true,
-    "useTemplateRef": true
+    "useTemplateRef": true,
+    "uploadFile": true,
+    "upload": true
   }
 }

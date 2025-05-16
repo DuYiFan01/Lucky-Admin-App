@@ -49,6 +49,17 @@ declare global {
     uuid: string
     image: string
   }
+
+  type IUploadSuccessInfo = {
+    fileId: number
+    originalName: string
+    fileName: string
+    storagePath: string
+    fileHash: string
+    fileType: string
+    fileBusinessType: string
+    fileSize: number
+  }
 }
 
 export {} // 防止模块污染

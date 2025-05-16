@@ -1,6 +1,7 @@
 /**
  * 路由拦截，通常也是登录拦截
  */
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store'
 import {
   needLoginPages as _needLoginPages,
@@ -10,7 +11,7 @@ import {
   getNotLoginPages,
   getLoginPage,
 } from '@/utils'
-import { getToken } from '@/utils/lucky/auth'
+import { isLogin } from '@/utils/lucky/auth'
 
 // 这里用来跳转到登录页
 const loginRoute = getLoginPage()
@@ -18,10 +19,6 @@ const loginRoute = getLoginPage()
 const whiteRouters = [loginRoute]
 
 const isDev = import.meta.env.DEV
-// 判断是否登录
-const isLogin = () => {
-  return !!getToken()
-}
 
 /**
  * 这里是所有的页面都需要登录
@@ -32,6 +29,7 @@ const navigateToInterceptor = {
   invoke({ url }: { url: string }) {
     // 获取用户状态
     const userStore = useUserStore()
+    const { userInfo } = storeToRefs(userStore)
     let path = url.split('?')[0]
     // 处理相对路径
     if (!path.startsWith('/')) {
@@ -72,12 +70,12 @@ const navigateToInterceptor = {
     // 每次路由拦截时重新计算登录状态
     const hasLogin = isLogin()
     console.log('是否登录:', hasLogin)
-    console.log('用户信息:', userStore.userInfo)
+    console.log('用户信息:', userInfo.value)
     if (hasLogin) {
       // 这里根据实际情况来写，若需要获取用户信息，可以在这里获取，不需要就直接返回
       // 判断是否获取了用户信息
       // 判断用户信息不存在或ID为0时需要获取用户信息
-      if (!userStore.userInfo || userStore.userInfo.id === 0) {
+      if (!userInfo.value || userInfo.value.id === 0) {
         console.log('已登录，没有用户信息，获取用户信息')
         userStore.UserInfoAction()
       }

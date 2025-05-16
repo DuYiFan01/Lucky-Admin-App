@@ -10,7 +10,7 @@
   <view class="profile-container">
     <!-- 用户信息区域 -->
     <view class="user-info-section">
-      <view class="avatar-wrapper" @click="navigateToAvatarEdit">
+      <view class="avatar-wrapper" @click="run">
         <wd-img :src="userInfo.avatar" width="80px" height="80px" radius="50%"></wd-img>
       </view>
       <view class="user-details">
@@ -43,7 +43,7 @@
             <wd-icon name="notification" size="20px"></wd-icon>
           </template>
         </wd-cell>
-        <wd-cell title="清理缓存" is-link @click="handleCellClick('privacy')">
+        <wd-cell title="清理缓存" is-link @click="handleClearCache">
           <template #icon>
             <wd-icon name="clear" size="20px"></wd-icon>
           </template>
@@ -70,52 +70,49 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/store'
 import { toast } from '@/utils/lucky/toast'
+import { uploadFileUrl, useUpload } from '@/utils/lucky/uploadFile'
+import { storeToRefs } from 'pinia'
+
 onShow((options) => {
   console.log('个人中心onShow', options)
   useUserStore().UserInfoAction()
 })
 
+const { run } = useUpload<IUploadSuccessInfo>(
+  uploadFileUrl.USER_AVATAR,
+  {},
+  {
+    onSuccess: (res) => useUserStore().UserInfoAction(),
+  },
+)
+
 // 用户信息
-const userInfo = useUserStore().userInfo
-
-// 监听用户信息变化
-// watch(
-//   () => userStore.userInfo,
-//   (newVal) => {
-//     userInfo.value = newVal
-//   },
-//   { deep: true },
-// )
-
-// 跳转到头像编辑页面
-const navigateToAvatarEdit = () => {
-  // 判断运行环境
-  if (uni.getSystemInfoSync().platform === 'mp-weixin') {
-    // 微信小程序环境
-    wx.getUserProfile({
-      desc: '用于完善会员资料',
-      success: (res) => {
-        userInfo.avatar = res.userInfo.avatarUrl
-      },
-    })
-  } else {
-    // H5或其他环境
-    uni.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        userInfo.avatar = res.tempFilePaths[0]
-      },
-    })
-  }
-}
+const { userInfo } = storeToRefs(useUserStore())
 
 // 处理功能项点击
 const handleCellClick = (type: string) => {
-  uni.showToast({
-    title: `点击了${type}`,
-    icon: 'none',
+  console.log('点击了功能项:', type)
+}
+
+// 处理清除缓存
+const handleClearCache = () => {
+  uni.showModal({
+    title: '清除缓存',
+    content: '确定要清除所有缓存吗？\n清除后需要重新登录',
+    success: (res) => {
+      if (res.confirm) {
+        try {
+          // 清除所有缓存
+          uni.clearStorageSync()
+          // 清除用户信息并跳转到登录页
+          useUserStore().LogoutAction()
+          toast.success('清除缓存成功')
+        } catch (err) {
+          console.error('清除缓存失败:', err)
+          toast.error('清除缓存失败')
+        }
+      }
+    },
   })
 }
 
