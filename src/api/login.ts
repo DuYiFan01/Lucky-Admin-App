@@ -43,3 +43,21 @@ export const getUserInfo = (token: string) => {
 export const logout = () => {
   return http.get('/user/logout')
 }
+
+/**
+ * 修改用户信息
+ * @param data 用户信息
+ * @returns R
+ */
+export const updateInfo = (data: IUpdateInfo) => {
+  return http.post('/user/updateInfo', data)
+}
+
+/**
+ * 修改用户密码
+ * @param data 用户信息
+ * @returns R
+ */
+export const updateUserPassword = (data: IUpdatePassword) => {
+  return http.post('/user/updatePassword', data)
+}

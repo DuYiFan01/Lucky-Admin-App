@@ -24,12 +24,12 @@
     <view class="function-section">
       <view class="cell-group">
         <view class="group-title">账号管理</view>
-        <wd-cell title="个人资料" is-link @click="handleCellClick('profile')">
+        <wd-cell title="个人资料" is-link @click="handleProfileInfo">
           <template #icon>
             <wd-icon name="user" size="20px"></wd-icon>
           </template>
         </wd-cell>
-        <wd-cell title="账号安全" is-link @click="handleCellClick('security')">
+        <wd-cell title="账号安全" is-link @click="handlePassword">
           <template #icon>
             <wd-icon name="lock-on" size="20px"></wd-icon>
           </template>
@@ -38,7 +38,7 @@
 
       <view class="cell-group">
         <view class="group-title">通用设置</view>
-        <wd-cell title="消息通知" is-link @click="handleCellClick('notification')">
+        <wd-cell title="消息通知" is-link @click="handleInform">
           <template #icon>
             <wd-icon name="notification" size="20px"></wd-icon>
           </template>
@@ -48,12 +48,12 @@
             <wd-icon name="clear" size="20px"></wd-icon>
           </template>
         </wd-cell>
-        <wd-cell title="应用更新" is-link @click="handleCellClick('privacy')">
+        <wd-cell title="应用更新" is-link @click="handleAppUpdate">
           <template #icon>
             <wd-icon name="refresh1" size="20px"></wd-icon>
           </template>
         </wd-cell>
-        <wd-cell title="关于我们" is-link @click="handleCellClick('about')">
+        <wd-cell title="关于我们" is-link @click="handleAbout">
           <template #icon>
             <wd-icon name="info-circle" size="20px"></wd-icon>
           </template>
@@ -77,7 +77,7 @@ onShow((options) => {
   console.log('个人中心onShow', options)
   useUserStore().UserInfoAction()
 })
-
+// 上传头像
 const { run } = useUpload<IUploadSuccessInfo>(
   uploadFileUrl.USER_AVATAR,
   {},
@@ -88,13 +88,30 @@ const { run } = useUpload<IUploadSuccessInfo>(
 
 // 用户信息
 const { userInfo } = storeToRefs(useUserStore())
-
-// 处理功能项点击
-const handleCellClick = (type: string) => {
-  console.log('点击了功能项:', type)
+// 个人资料
+const handleProfileInfo = () => {
+  uni.navigateTo({ url: `/pages/profile/info/index` })
 }
-
-// 处理清除缓存
+// 账号安全
+const handlePassword = () => {
+  uni.navigateTo({ url: `/pages/profile/password/index` })
+}
+// 消息通知
+const handleInform = () => {
+  // uni.navigateTo({ url: `/pages/profile/inform/index` })
+  toast.success('功能开发中')
+}
+// 应用更新
+const handleAppUpdate = () => {
+  // toast.success('已是最新版本')
+  toast.success('功能开发中')
+}
+// 关于我们
+const handleAbout = () => {
+  // uni.navigateTo({ url: `/pages/profile/about/index` })
+  toast.success('功能开发中')
+}
+// 清除缓存
 const handleClearCache = () => {
   uni.showModal({
     title: '清除缓存',
@@ -115,8 +132,7 @@ const handleClearCache = () => {
     },
   })
 }
-
-// 处理退出登录
+// 退出登录
 const handleLogout = () => {
   uni.showModal({
     title: '提示',

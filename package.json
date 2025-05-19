@@ -1,23 +1,23 @@
 {
-  "name": "unibest",
+  "name": "Lucky-Admin-Vue-App",
   "type": "commonjs",
-  "version": "2.6.3",
-  "description": "unibest - 最好的 uniapp 开发模板",
+  "version": "1.0.0",
+  "description": "Lucky-Admin-Vue-App 基于Lucky-Admin-Vue 的UniAPP开发项目模板",
   "author": {
-    "name": "feige996",
-    "zhName": "菲鸽",
-    "email": "1020103647@qq.com",
-    "github": "https://github.com/feige996",
-    "gitee": "https://gitee.com/feige996"
+    "name": "DuYiFan",
+    "zhName": "DuYiFan",
+    "email": "951359056@qq.com",
+    "github": "https://gitee.com/xiaodu6",
+    "gitee": "https://gitee.com/xiaodu6"
   },
   "license": "MIT",
-  "repository": "https://github.com/feige996/unibest",
-  "repository-gitee": "https://gitee.com/feige996/unibest",
-  "repository-deprecated": "https://github.com/codercup/unibest",
+  "repository": "https://gitee.com/xiaodu6",
+  "repository-gitee": "https://gitee.com/xiaodu6",
+  "repository-deprecated": "https://gitee.com/xiaodu6",
   "bugs": {
-    "url": "https://github.com/feige996/unibest/issues"
+    "url": "https://gitee.com/xiaodu6"
   },
-  "homepage": "https://feige996.github.io/unibest/",
+  "homepage": "https://gitee.com/xiaodu6",
   "engines": {
     "node": ">=18",
     "pnpm": ">=7.30"

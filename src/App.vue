@@ -15,10 +15,8 @@ onLaunch(() => {
     }
     console.log('网络状态:' + networkType)
   })
-  // 检测是否登录
-  // #ifdef MP-WEIXIN
+
   checkLogin()
-  // #endif
 })
 onShow((options) => {
   console.log(options)
@@ -28,8 +26,7 @@ onShow((options) => {
 onHide(() => {
   console.log('App Hide')
 })
-// 检测是否登录
-// #ifdef MP-WEIXIN
+
 const checkLogin = () => {
   // 判断是否登录
   useUserStore()
@@ -49,7 +46,6 @@ const checkLogin = () => {
       }
     })
 }
-// #endif
 </script>
 
 <style lang="scss">

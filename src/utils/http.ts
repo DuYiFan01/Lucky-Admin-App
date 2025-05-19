@@ -40,20 +40,25 @@ export const http = <T>(options: CustomRequestOptions) => {
               })
               console.log('登录过期')
               toast.error('登录过期,请重新登录')
-              return
+              reject(new Error(data.message))
             } else {
               toast.error(data.message)
+              reject(new Error(data.message))
             }
             uni.navigateTo({ url: '/pages/login/index' })
           } else if (data.code === -403) {
             // 没有权限
             toast.error(data.message)
+            reject(new Error(data.message))
           } else if (data.code === -405) {
             // 没有角色
             toast.error(data.message)
+            reject(new Error(data.message))
           } else if (data.code === -1) {
             // 业务错误
+            console.log('业务错误', data.message)
             toast.error(data.message)
+            reject(new Error(data.message))
           }
           resolve(res.data as R<T>)
         } else {

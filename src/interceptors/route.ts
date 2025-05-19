@@ -30,7 +30,10 @@ const navigateToInterceptor = {
     // 获取用户状态
     const userStore = useUserStore()
     const { userInfo } = storeToRefs(userStore)
-    let path = url.split('?')[0]
+    let path = (url || '').split('?')[0]
+    let lastPage = getLastPage()?.route ?? '/'
+    lastPage = (lastPage || '/').startsWith('/') ? lastPage : `/${lastPage}`
+    console.log('getLastPage', lastPage)
     // 处理相对路径
     if (!path.startsWith('/')) {
       const currentPath = getLastPage().route
@@ -83,7 +86,7 @@ const navigateToInterceptor = {
     }
     console.log('未登录，跳转登录页')
     userStore.LogoutAction()
-    const redirectRoute = `${loginRoute}?redirect=${encodeURIComponent(url)}`
+    const redirectRoute = `${loginRoute}?redirect=${encodeURIComponent(lastPage)}`
     uni.navigateTo({ url: redirectRoute })
     return false
   },

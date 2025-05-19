@@ -67,7 +67,7 @@ export const useUserStore = defineStore(
     /**
      * 退出登录 并 删除用户信息
      */
-    const LogoutAction = () => {
+    const LogoutAction = async () => {
       logout()
       removeUserInfo()
     }

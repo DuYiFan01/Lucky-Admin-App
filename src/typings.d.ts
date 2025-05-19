@@ -49,7 +49,9 @@ declare global {
     uuid: string
     image: string
   }
-
+  /**
+   * 上传成功的信息
+   */
   type IUploadSuccessInfo = {
     fileId: number
     originalName: string
@@ -59,6 +61,23 @@ declare global {
     fileType: string
     fileBusinessType: string
     fileSize: number
+  }
+  /**
+   * 更新用户信息
+   */
+  type IUpdateInfo = {
+    id: number
+    name: string
+    sex: string
+  }
+  /**
+   * 更新用户信息
+   */
+  type IUpdatePassword = {
+    id: number
+    oldPassword: string
+    newPassword: string
+    confirmPassword: string
   }
 }
 

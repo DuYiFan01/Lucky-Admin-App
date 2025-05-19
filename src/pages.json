@@ -74,6 +74,20 @@
         "navigationBarTitleText": "工作台",
         "navigationStyle": "custom"
       }
+    },
+    {
+      "path": "pages/profile/info/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "个人资料"
+      }
+    },
+    {
+      "path": "pages/profile/password/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "修改密码"
+      }
     }
   ],
   "subPackages": []

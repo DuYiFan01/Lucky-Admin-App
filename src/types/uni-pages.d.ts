@@ -7,7 +7,9 @@ interface NavigateToOptions {
   url: "/pages/login/index" |
        "/pages/index/index" |
        "/pages/profile/index" |
-       "/pages/work/index";
+       "/pages/work/index" |
+       "/pages/profile/info/index" |
+       "/pages/profile/password/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
