@@ -219,54 +219,7 @@ const handleWechatLogin = () => {
     return
   }
 
-  // 显示加载中
-  uni.showLoading({ title: '登录中...' })
-
-  // // 调用微信登录API
-  // uni.login({
-  //   provider: 'weixin',
-  //   success: async (loginRes) => {
-  //     if (loginRes.code) {
-  //       try {
-  //         // 这里模拟登录成功，实际项目中应该调用后端接口
-  //         // const res = await api.login({ code: loginRes.code })
-
-  //         // 模拟登录成功后的用户信息
-  //         const mockUserInfo = {
-  //           nickname: '微信用户',
-  //           avatar:
-  //             'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
-  //           token: 'mock-token-' + Date.now(),
-  //         }
-
-  //         // 保存用户信息到store
-  //         userStore.setUserInfo(mockUserInfo)
-
-  //         // 登录成功提示
-  //         toast.success('登录成功')
-
-  //         // 延迟跳转到首页
-  //         setTimeout(() => {
-  //           uni.switchTab({
-  //             url: '/pages/index/index',
-  //           })
-  //         }, 1500)
-  //       } catch (error) {
-  //         console.error('登录失败', error)
-  //         toast.error('登录失败，请重试')
-  //       } finally {
-  //         uni.hideLoading()
-  //       }
-  //     } else {
-  //       uni.hideLoading()
-  //       toast.error('登录失败，请重试')
-  //     }
-  //   },
-  //   fail: () => {
-  //     uni.hideLoading()
-  //     toast.error('登录失败，请重试')
-  //   },
-  // })
+  toast.success('功能待开发')
 }
 
 // 刷新验证码
