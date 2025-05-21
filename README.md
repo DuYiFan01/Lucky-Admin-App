@@ -1,32 +1,55 @@
-# 文档待完善
+# Lucky-Admin-App
 
-### 说明
-本项目拉取了 unibest 项目，其中，修改的很多的内容，包括路由拦截，请求拦截等内容，后续使用说明会完善在文档当中，不保证目前版本没有BUG和当前版本的稳定性，如果有问题请及时反馈，谢谢！
+## 文档地址
 
-### 配置
+文档地址：  [Home | Lucky-Admin](https://doc.admin.anlucky.cn/)
 
-其中框架的大部分配置都可以参考于 unibest项目进行配置
 
-### 致谢
+## 1. 部署Lucky-Admin-Vue的后端
 
-感谢 UniBest 项目的作者提供的框架
+不想部署后端可参考文档修改后端请求地址，直接使用Lucky-Admin-Vue 在线预览后端地址即可
 
-感谢 wot ui 项目的作者提供的组件库
+## 2. 克隆项目到本地
 
-.....
+```shell
+git clone https://gitee.com/xiaodu6/lucky-admin-app-unibest.git
+```
 
-其中也可能使用了别的作者的项目，致谢开源精神！
+## 3. 导入移动端数据库
 
-### 项目地址
+> 移动端的SQL在根目录下：sql/sql/createApp.sql  
 
-配套后端：https://gitee.com/xiaodu6/lucky-admin-vue
+> 移动端的菜单仅仅提供了基础的菜单配置和角色配置，并没有实现动态路由，权限控制使用的是Web端页面的权限控制配置器，因此，若需要使用动态路由是需要自己实现的。
 
-unibest: https://gitee.com/feige996/unibest
+## 4. 修改配置文件
 
-unibest文档：https://www.unibest.tech/
+移动端的后端依赖于Lucky-Admin-Vue的后端故修改配置文件同Lucky-Admin-Vue的后端配置方法相同
 
-Wot Ui 文档：https://wot-design-uni.cn/
+## 5. 移动端安装依赖
 
-### BUG反馈项目交流
+```shell
+npm install pnpm -g
+pnpm install
+```
 
-![qq-group.png](qq-group.png)
+## 6. 移动端启动
+
+```shell
+pnpm dev ## 运行H5环境
+pnpm dev:mp-weixin ## 运行微信小程序环境
+```
+
+## 7. 移动端运行到其他平台
+
+|     类型     |    标识     |
+| :----------: | :---------: |
+|  微信小程序  |  mp-weixin  |
+| 支付宝小程序 |  mp-alipay  |
+|  抖音小程序  | mp-toutiao  |
+|  飞书小程序  |   mp-lark   |
+|   QQ小程序   |    mp-qq    |
+|  京东小程序  |    mp-jd    |
+| 小红书小程序 |   mp-xhs    |
+|  百度小程序  |  mp-baidu   |
+|  快手小程序  | mp-kuaishou |
+
