@@ -26,8 +26,30 @@ export const uploadFileUrl = {
 }
 
 /**
- * 上传选项接口
+ * 通用文件上传函数（支持直接传入文件路径）
+ * @param url 上传地址
+ * @param filePath 本地文件路径
+ * @param formData 额外表单数据
+ * @param options 上传选项
  */
+export const useFileUpload = <T = string>(
+  url: string,
+  filePath: string,
+  formData: Record<string, any> = {},
+  options: Omit<UploadOptions, 'sourceType' | 'sizeType' | 'count'> = {},
+) => {
+  return useUpload<T>(
+    url,
+    formData,
+    {
+      ...options,
+      sourceType: ['album'],
+      sizeType: ['original'],
+    },
+    filePath,
+  )
+}
+
 export interface UploadOptions {
   /** 最大可选择的图片数量，默认为1 */
   count?: number
@@ -59,6 +81,8 @@ export const useUpload = <T = string>(
   url: string,
   formData: Record<string, any> = {},
   options: UploadOptions = {},
+  /** 直接传入文件路径，跳过选择器 */
+  directFilePath?: string,
 ) => {
   /** 上传中状态 */
   const loading = ref(false)
@@ -109,6 +133,26 @@ export const useUpload = <T = string>(
    * - 其他平台使用 chooseImage
    */
   const run = () => {
+    if (directFilePath) {
+      // 直接使用传入的文件路径
+      loading.value = true
+      progress.value = 0
+      uploadFile<T>({
+        url,
+        tempFilePath: directFilePath,
+        formData,
+        data,
+        error,
+        loading,
+        progress,
+        onProgress,
+        onSuccess,
+        onError,
+        onComplete,
+      })
+      return
+    }
+
     // #ifdef MP-WEIXIN
     // 微信小程序环境下使用 chooseMedia API
     uni.chooseMedia({
