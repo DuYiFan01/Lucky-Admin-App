@@ -1,4 +1,12 @@
-# Lucky-Admin-App
+<p align="center">
+	<img alt="logo" src="https://doc.admin.anlucky.cn/images/logo.png" style="width: 100px;" />
+</p>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Lucky-Admin-App</h1>
+<h4 align="center">基于UniApp + Vue + TS + Pinia 开发的移动端解决方案</h4>
+<p align="center">
+<a href='https://gitee.com/xiaodu6/lucky-admin-app/stargazers'><img src='https://gitee.com/xiaodu6/lucky-admin-app/badge/star.svg?theme=dark' alt='star'></img></a>
+<a href='https://gitee.com/xiaodu6/lucky-admin-app/members'><img src='https://gitee.com/xiaodu6/lucky-admin-app/badge/fork.svg?theme=dark' alt='fork'></img></a>
+</p>
 
 ## 文档地址
 
@@ -53,3 +61,5 @@ pnpm dev:mp-weixin ## 运行微信小程序环境
 |  百度小程序  |  mp-baidu   |
 |  快手小程序  | mp-kuaishou |
 
+## 交流群
+QQ：711152276
