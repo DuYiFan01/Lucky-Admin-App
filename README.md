@@ -6,8 +6,8 @@
 <p align="center">
 <a href='https://gitee.com/xiaodu6/lucky-admin-app/stargazers'><img src='https://gitee.com/xiaodu6/lucky-admin-app/badge/star.svg?theme=dark' alt='star'></img></a>
 <a href='https://gitee.com/xiaodu6/lucky-admin-app/members'><img src='https://gitee.com/xiaodu6/lucky-admin-app/badge/fork.svg?theme=dark' alt='fork'></img></a>
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/DuYiFan01/Lucky-Admin-App?link=https%3A%2F%2Fgithub.com%2FDuYiFan01%2FLucky-Admin-App">
-<img alt="GitHub forks" src="https://img.shields.io/github/forks/DuYiFan01/Lucky-Admin-App?link=https%3A%2F%2Fgithub.com%2FDuYiFan01%2FLucky-Admin-App">
+<a href='https://github.com/DuYiFan01/Lucky-Admin-App'><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/DuYiFan01/Lucky-Admin-App"/> </a>
+<a href='https://github.com/DuYiFan01/Lucky-Admin-App'><img alt="GitHub forks" src="https://img.shields.io/github/forks/DuYiFan01/Lucky-Admin-App"> </a>
 <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/DuYiFan01/Lucky-Admin-App?link=https%3A%2F%2Fgithub.com%2FDuYiFan01%2FLucky-Admin-App">
 </p>
 
