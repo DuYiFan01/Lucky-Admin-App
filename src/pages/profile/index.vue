@@ -165,8 +165,7 @@ const handleAppUpdate = () => {
 }
 // 关于我们
 const handleAbout = () => {
-  // uni.navigateTo({ url: `/pages/profile/about/index` })
-  toast.success('功能开发中')
+  uni.navigateTo({ url: `/pages/profile/about/index` })
 }
 // 清除缓存
 const handleClearCache = () => {

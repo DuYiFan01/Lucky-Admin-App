@@ -76,6 +76,13 @@
       }
     },
     {
+      "path": "pages/profile/about/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "关于我们"
+      }
+    },
+    {
       "path": "pages/profile/info/index",
       "type": "page",
       "style": {

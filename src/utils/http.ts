@@ -41,6 +41,7 @@ export const http = <T>(options: CustomRequestOptions) => {
               console.log('登录过期')
               toast.error('登录过期,请重新登录')
               reject(new Error(data.message))
+              return
             } else {
               toast.error(data.message)
               reject(new Error(data.message))

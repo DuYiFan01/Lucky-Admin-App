@@ -138,7 +138,7 @@
 import { ref } from 'vue'
 import { useUserStore } from '@/store/user'
 import { isMpWeixin } from '@/utils/platform'
-import { getCode, ILoginForm } from '@/api/login'
+import { getCode, getWxCode, ILoginForm } from '@/api/login'
 import { toast } from '@/utils/lucky/toast'
 import { isTableBar } from '@/utils'
 const redirectRoute = ref('')
@@ -207,7 +207,7 @@ const handleAccountLogin = async () => {
 }
 
 // 微信登录
-const handleWechatLogin = () => {
+const handleWechatLogin = async () => {
   if (!isMpWeixin) {
     toast.info('请在微信小程序中使用此功能')
     return
@@ -218,8 +218,19 @@ const handleWechatLogin = () => {
     toast.error('请先阅读并同意用户协议和隐私政策')
     return
   }
-
-  toast.success('功能待开发')
+  // 获取微信小程序登录的code
+  const { code } = await getWxCode()
+  // 微信登录
+  await userStore.WxLoginAction({ code })
+  // 获取用户信息
+  await userStore.UserInfoAction()
+  // 跳转到首页或重定向页面
+  const targetUrl = redirectRoute.value || '/pages/index/index'
+  if (isTableBar(targetUrl)) {
+    uni.switchTab({ url: targetUrl })
+  } else {
+    uni.redirectTo({ url: targetUrl })
+  }
 }
 
 // 刷新验证码

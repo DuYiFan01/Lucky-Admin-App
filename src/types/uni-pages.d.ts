@@ -8,6 +8,7 @@ interface NavigateToOptions {
        "/pages/index/index" |
        "/pages/profile/index" |
        "/pages/work/index" |
+       "/pages/profile/about/index" |
        "/pages/profile/info/index" |
        "/pages/profile/password/index";
 }

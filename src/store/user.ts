@@ -1,4 +1,4 @@
-import { login, getUserInfo, logout } from '@/api/login'
+import { login, getUserInfo, logout, wxLogin } from '@/api/login'
 import { getToken, getTokenKey, removeToken, setToken } from '@/utils/lucky/auth'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -71,9 +71,20 @@ export const useUserStore = defineStore(
       logout()
       removeUserInfo()
     }
+    /**
+     * 微信登录
+     * @param credentials 微信登录Code
+     */
+    const WxLoginAction = async (credentials: { code: string }) => {
+      const res = await wxLogin(credentials)
+      setToken(res.data.token)
+      return res
+    }
+
     return {
       userInfo,
       LoginAction,
+      WxLoginAction,
       UserInfoAction,
       LogoutAction,
     }
