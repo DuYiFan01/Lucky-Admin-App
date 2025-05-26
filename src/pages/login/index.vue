@@ -24,32 +24,26 @@
         <view class="input-wrapper">
           <wd-input
             v-model="loginForm.username"
+            prefix-icon="user"
             placeholder="请输入用户名"
             clearable
             class="login-input"
             :border="false"
             required
-          >
-            <template #prefix>
-              <wd-icon name="person" size="20px" class="input-icon"></wd-icon>
-            </template>
-          </wd-input>
+          ></wd-input>
           <view class="input-bottom-line"></view>
         </view>
         <view class="input-wrapper">
           <wd-input
             v-model="loginForm.password"
+            prefix-icon="lock-on"
             placeholder="请输入密码"
             clearable
             show-password
             class="login-input"
             :border="false"
             required
-          >
-            <template #prefix>
-              <wd-icon name="lock" size="20px" class="input-icon"></wd-icon>
-            </template>
-          </wd-input>
+          ></wd-input>
           <view class="input-bottom-line"></view>
         </view>
         <!-- 验证码区域 -->
@@ -57,15 +51,13 @@
           <wd-input
             v-if="captcha.captchaEnabled"
             v-model="loginForm.code"
+            prefix-icon="secured"
             placeholder="请输入验证码"
             clearable
             class="login-input captcha-input"
             :border="false"
             required
           >
-            <template #prefix>
-              <wd-icon name="shield" size="20px" class="input-icon"></wd-icon>
-            </template>
             <template #suffix>
               <image
                 class="captcha-image"
@@ -106,9 +98,6 @@
           @click="handleWechatLogin"
           class="wechat-login-btn"
         >
-          <template #prefix>
-            <wd-icon name="weixin" size="22px" class="wechat-icon"></wd-icon>
-          </template>
           微信一键登录
         </wd-button>
         <!-- #endif -->

@@ -49,6 +49,7 @@ const checkLogin = () => {
 </script>
 
 <style lang="scss">
+@import '@/style/iconfont/iconfont.css';
 /* stylelint-disable selector-type-no-unknown */
 button::after {
   border: none;
